@@ -1,0 +1,41 @@
+<p-card header="User Registration">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="p-fluid">
+            <div class="p-field">
+                <label for="name">Name</label>
+                <input id="name" type="text" formControlName="name" pInputText />
+                <small *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
+                    Name is required.
+                </small>
+            </div>
+
+            <div class="p-field">
+                <label for="email">Email</label>
+                <input id="email" type="email" formControlName="email" pInputText />
+                <small *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+                    Valid email is required.
+                </small>
+            </div>
+
+            <div class="p-field">
+                <label for="userName">Username</label>
+                <input id="userName" type="text" formControlName="userName" pInputText />
+                <small *ngIf="registrationForm.get('userName')?.invalid && registrationForm.get('userName')?.touched">
+                    Username is required.
+                </small>
+            </div>
+
+            <div class="p-field">
+                <label for="password">Password</label>
+                <input id="password" type="password" formControlName="password" pInputText />
+                <small *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">
+                    Password must be at least 6 characters long.
+                </small>
+            </div>
+
+            <button pButton type="submit" label="Register" [disabled]="registrationForm.invalid"></button>
+            <button pButton label="Back To Login" (click)="backToLogin()"></button>
+        </div>
+    </form>
+</p-card>
+<p-toast></p-toast>

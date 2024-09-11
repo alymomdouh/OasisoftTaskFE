@@ -41,6 +41,11 @@ export class AppLayoutComponent implements OnInit {
         command: () => {
           this.Logout();
         }
+      },
+      {
+        label: 'Register New User',
+        icon: 'bi bi-power',
+        routerLink: '/auth/register'
       }
 
     ];
