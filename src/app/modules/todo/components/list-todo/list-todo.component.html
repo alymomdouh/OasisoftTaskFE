@@ -1,0 +1,258 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast />
+            <!-- <p-toast position="{{currentLang == 'en'?'top-right':'top-left'}}"></p-toast> -->
+            <div class="flex flex-column md:flex-row md:align-items-center md:justify-content-between">
+                <!-- <h5 class="block m-0"> {{'listOption.list.listTile'|translate}}</h5> -->
+                <button pButton label="create New ToDO" icon="bi bi-plus-circle-fill" class="p-button-primary"
+                    style="margin: 30px;" (click)="showCreateForm()">
+                </button>
+            </div>
+            <p-table #dt [value]="toDoList" [columns]="toDoList" responsiveLayout="scroll" [rows]="pageSize"
+                [paginator]="true" [lazy]="false" [totalRecords]="totalRecords" [showCurrentPageReport]="true"
+                [customSort]="false" selectionMode="single" [tableStyle]="{ 'min-width': '50rem' }"
+                [rowsPerPageOptions]="[5, 10, 20]" [rowHover]="true" dataKey="id" [customSort]="false">
+                <ng-template pTemplate="caption">
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="p-element" pSortableColumn="id" style="text-align: center;width:25%">
+                            id
+                        </th>
+                        <th class="p-element" pSortableColumn="userId" style="text-align: center;width:25%">
+                            userId
+                        </th>
+                        <th class="p-element" pSortableColumn="title" style="text-align: center;width:25%">
+                            title
+                        </th>
+                        <th class="p-element" pSortableColumn="completed" style="text-align: center;width:25%">
+                            completed
+                        </th>
+                        <th class="p-element" style="text-align: center;">
+                            actions
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td style="text-align: center;width:25%">{{ item.id }}</td>
+                        <td style="text-align: center;width:25%">{{ item.userId }}</td>
+                        <td style="text-align: center;width:25%">{{ item.title }}</td>
+                        <td style="text-align: center;width:25%">
+                            <!-- {{ item.completed }} -->
+                            <span class="invaildspan" *ngIf="item.completed==false">
+                                <i style="font-size: 1.3rem" class="pi pi-times mx-2"></i>
+                            </span>
+                            <span class="correctspan" *ngIf="item.completed==true">
+                                <i style="font-size: 1.3rem" class="pi pi-check mx-2"></i>
+                            </span>
+                        </td>
+                        <td style="text-align: center;width:25%">
+                            <div class=" justify-content-center" style="display: flex;">
+                                <button pButton icon="bi bi-card-checklist" (click)="showDetails(item)" title="details"
+                                    class="p-button-text p-button-rounded mr-2">
+                                </button>
+                                <button pButton icon="bi bi-pencil-square" (click)="showUpdate(item)" title="update"
+                                    class="p-button-text p-button-rounded mr-2">
+                                </button>
+                                <button pButton icon="bi bi-trash3-fill" class="p-button-text p-button-rounded mr-2"
+                                    title="delete" (click)="showdelete(item)">
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+<p-dialog [draggable]="false" [(visible)]="showCreateFormDialog" header="Create ToDo" [modal]="true"
+    [style]="{width:'900px'}" (onHide)="closeItem()">
+    <ng-template pTemplate="content">
+        <div class="grid">
+            <div class="col-12 md:col-12">
+                <form [formGroup]="toDoForm" (submit)="saveForm()" class="p-fluid" #form="ngForm">
+                    <div class="formgrid grid col">
+                        <div class="field col-9 sm:col-9" style="margin-top: 35px;">
+                            <div class="flex">
+                                <label class="mb-2">
+                                    Title
+                                    <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                            <span class="p-input-icon-left">
+                                <i class="bi bi-pencil-square"></i>
+                                <input type="text" formControlName="title"
+                                    class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
+                                    [ngClass]="{ 'is-invalid': submittedtoDoForm && toDoFormControls['title'].errors, 'disabled': showDetailsFormDialog }" />
+                            </span>
+                            <div *ngIf="submittedtoDoForm && toDoFormControls['title'].errors" class="invalid-feedback">
+                                <div *ngIf="toDoFormControls['title'].errors['required']">
+                                    Title Is Required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field col-3 sm:col-3" style="margin-top: 35px;">
+                            <div class="flex">
+                                <label class="mb-2">
+                                    Completed
+                                </label>
+                            </div>
+                            <span class="p-input-icon-left">
+                                <!-- <i class="bi bi-pencil-square"></i> -->
+                                <p-checkbox name="completed" id="completed" [binary]="true" formControlName="completed"
+                                    [ngClass]="{ 'is-invalid': submittedtoDoForm && toDoFormControls['completed'].errors, 'disabled': showDetailsFormDialog }">
+                                </p-checkbox>
+                            </span>
+                            <div *ngIf="submittedtoDoForm && toDoFormControls['completed'].errors"
+                                class="invalid-feedback">
+                                <div *ngIf="toDoFormControls['completed'].errors['required']">
+                                    Completed Is Required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex align-items-center justify-content-between w-full" style="display: flex;">
+            <button pButton type="submit" class="p-button-outlined p-button-danger" label="cancel" (click)="closeItem()"
+                icon="bi bi-x-lg mx-2">
+            </button>
+            <button pButton type="submit" icon="bi bi-check-circle-fill mx-2" class="p-button-primary" label="Create"
+                (click)="saveForm()">
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>
+<p-dialog [draggable]="false" [(visible)]="showUpdateFormDialog" header="Update ToDo" [modal]="true"
+    [style]="{width:'900px'}" (onHide)="closeItem()">
+    <ng-template pTemplate="content">
+        <div class="grid">
+            <div class="col-12 md:col-12">
+                <form [formGroup]="toDoForm" (submit)="saveForm()" class="p-fluid" #form="ngForm">
+                    <div class="formgrid grid col">
+                        <div class="field col-9 sm:col-9" style="margin-top: 35px;">
+                            <div class="flex">
+                                <label class="mb-2">
+                                    Title
+                                    <span class="text-danger">*</span>
+                                </label>
+                            </div>
+                            <span class="p-input-icon-left">
+                                <i class="bi bi-pencil-square"></i>
+                                <input type="text" formControlName="title"
+                                    class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
+                                    [ngClass]="{ 'is-invalid': submittedtoDoForm && toDoFormControls['title'].errors, 'disabled': showDetailsFormDialog }" />
+                            </span>
+                            <div *ngIf="submittedtoDoForm && toDoFormControls['title'].errors" class="invalid-feedback">
+                                <div *ngIf="toDoFormControls['title'].errors['required']">
+                                    Title Is Required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field col-3 sm:col-3" style="margin-top: 35px;">
+                            <div class="flex">
+                                <label class="mb-2">
+                                    Completed
+                                </label>
+                            </div>
+                            <span class="p-input-icon-left">
+                                <!-- <i class="bi bi-pencil-square"></i> -->
+                                <p-checkbox name="completed" id="completed" [binary]="true" formControlName="completed"
+                                    [ngClass]="{ 'is-invalid': submittedtoDoForm && toDoFormControls['completed'].errors, 'disabled': showDetailsFormDialog }">
+                                </p-checkbox>
+                            </span>
+                            <div *ngIf="submittedtoDoForm && toDoFormControls['completed'].errors"
+                                class="invalid-feedback">
+                                <div *ngIf="toDoFormControls['completed'].errors['required']">
+                                    Completed Is Required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex align-items-center justify-content-between w-full" style="display: flex;">
+            <button pButton type="submit" class="p-button-outlined p-button-danger" label="cancel" (click)="closeItem()"
+                icon="bi bi-x-lg mx-2">
+            </button>
+            <button pButton type="submit" icon="bi bi-check-circle-fill mx-2" class="p-button-primary" label="Update"
+                (click)="saveForm()">
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>
+<p-dialog [draggable]="false" [(visible)]="showDetailsFormDialog" header="Details ToDo" [modal]="true"
+    [style]="{width:'900px'}" (onHide)="closeItem()">
+    <ng-template pTemplate="content">
+        <div class="grid">
+            <div class="col-12 md:col-12">
+                <form [formGroup]="toDoForm" class="p-fluid" #form="ngForm">
+                    <div class="formgrid grid col">
+                        <div class="field col-9 sm:col-9" style="margin-top: 35px;">
+                            <div class="flex">
+                                <label class="mb-2">
+                                    Title
+                                    <!-- <span class="text-danger">*</span> -->
+                                </label>
+                            </div>
+                            <span class="p-input-icon-left">
+                                <!-- <i class="bi bi-pencil-square"></i> -->
+                                <input type="text" formControlName="title"
+                                    class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
+                                    [ngClass]="{ 'is-invalid': submittedtoDoForm && toDoFormControls['title'].errors, 'disabled': showDetailsFormDialog }" />
+                            </span>
+                        </div>
+                        <div class="field col-3 sm:col-3" style="margin-top: 35px;">
+                            <div class="flex">
+                                <label class="mb-2">
+                                    Completed
+                                </label>
+                            </div>
+                            <span class="p-input-icon-left">
+                                <!-- <i class="bi bi-pencil-square"></i> -->
+                                <p-checkbox name="completed" id="completed" [binary]="true" formControlName="completed"
+                                    [ngClass]="{ 'is-invalid': submittedtoDoForm && toDoFormControls['completed'].errors, 'disabled': showDetailsFormDialog }">
+                                </p-checkbox>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex align-items-center justify-content-between w-full" style="display: flex;">
+            <button pButton type="submit" class="p-button-outlined p-button-danger" label="cancel" (click)="closeItem()"
+                icon="bi bi-x-lg mx-2">
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>
+<p-dialog [draggable]="false" [(visible)]="showDeleteFormDialog" header="delete" [modal]="true"
+    [style]="{width:'600px'}">
+    <div class="flex flex-column align-items-center justify-content-center">
+        <i class="bi bi-exclamation-triangle-fill mr-3" style="font-size: 3rem; color: #f00; margin-bottom: 2rem;"></i>
+        <span *ngIf="selectedItem">
+            Are You Sure You Want To Delete
+            <b>{{selectedItem.title}}</b>?
+        </span>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="flex align-items-center justify-content-between w-full" style="display: flex;">
+            <button pButton type="submit" class="p-button-outlined" label="cancel" icon="bi bi-x-lg mx-2"
+                (click)="closeItem()">
+            </button>
+            <button pButton type="submit" icon="bi bi-check-circle-fill mx-2" class="p-button-primary" label="delete"
+                (click)="confirmDelete()">
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>
