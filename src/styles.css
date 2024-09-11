@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+
+
+.correctspan {
+    display: block;
+    color: white;
+    background-color: green;
+    border-radius: 50%;
+    width: 46px;
+    text-align: center;
+    margin: auto;
+}
+
+.invaildspan {
+    display: block;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    width: 46px;
+    text-align: center;
+    margin: auto;
+}
