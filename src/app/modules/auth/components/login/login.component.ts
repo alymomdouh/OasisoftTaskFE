@@ -60,7 +60,6 @@ export class LoginComponent {
     this.accountService.Login(loginMode)
       .subscribe({
         next: (res: UserResult) => {
-          debugger
           if (res && res.id) {
             this.accountService.processToken(res);
             this._router.navigate(['/home/index']);

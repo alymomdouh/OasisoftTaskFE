@@ -8,7 +8,6 @@
                     Name is required.
                 </small>
             </div>
-
             <div class="p-field">
                 <label for="email">Email</label>
                 <input id="email" type="email" formControlName="email" pInputText />
@@ -16,7 +15,6 @@
                     Valid email is required.
                 </small>
             </div>
-
             <div class="p-field">
                 <label for="userName">Username</label>
                 <input id="userName" type="text" formControlName="userName" pInputText />
@@ -24,7 +22,6 @@
                     Username is required.
                 </small>
             </div>
-
             <div class="p-field">
                 <label for="password">Password</label>
                 <input id="password" type="password" formControlName="password" pInputText />
@@ -32,7 +29,6 @@
                     Password must be at least 6 characters long.
                 </small>
             </div>
-
             <button pButton type="submit" label="Register" [disabled]="registrationForm.invalid"></button>
             <button pButton label="Back To Login" (click)="backToLogin()"></button>
         </div>

@@ -98,7 +98,6 @@ export class ListTodoComponent implements OnInit {
   }
   submittedtoDoForm = false;
   saveForm() {
-    debugger
     this.submittedtoDoForm = true;
     if (this.toDoForm.invalid) {
       return;
@@ -117,7 +116,6 @@ export class ListTodoComponent implements OnInit {
       });
     }
     else {
-      debugger
       this._todoService.Create(this.toDoForm.value).subscribe({
         next: (result: ListToDo) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: "created Successfully", life: 3000 });
