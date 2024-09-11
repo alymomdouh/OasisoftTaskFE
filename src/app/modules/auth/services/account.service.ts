@@ -41,8 +41,17 @@ export class AccountService {
   decodeToken(token: string): any {
     return this.jwtHelper.decodeToken(token);
   }
-  getUserId(): string | null {
-    return localStorage.getItem('UserId');
+  getUserId(): number {
+    const userid = localStorage.getItem('UserId') ?? '0'
+    return parseInt(userid);
+  }
+  getUserName(): string | '' {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const userDto = JSON.parse(storedUser);
+      return userDto.name;
+    }
+    return '';
   }
   isTokenExpired(token: string): boolean {
     return this.jwtHelper.isTokenExpired(token);

@@ -23,7 +23,8 @@
         <ng-template pTemplate="end">
             <div class="flex align-items-center gap-2">
                 <p-tieredMenu #menu [model]="logoutitems" [popup]="true" />
-                <p-button label="user" (onClick)="menu.toggle($event)" [styleClass]="'logoutbtn'" />
+                <p-button [label]="accountService.getUserName()" (onClick)="menu.toggle($event)"
+                    [styleClass]="'logoutbtn'" />
                 <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
 
             </div>

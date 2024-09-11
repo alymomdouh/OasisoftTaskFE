@@ -19,7 +19,7 @@ export class AppLayoutComponent implements OnInit {
   items: MenuItem[] | undefined;
   logoutitems: MenuItem[] | undefined;
   constructor(
-    private accountService: AccountService,
+    public accountService: AccountService,
     private messageService: MessageService) { }
   ngOnInit() {
     this.logoutitems = [
