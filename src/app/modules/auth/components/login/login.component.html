@@ -51,6 +51,9 @@
                                 <button type="button" pButton routerLink="/auth/forgot-password/"
                                     class="text-1xl p-button-text" label="did You Forget Password">
                                 </button>
+                                <button type="button" pButton (click)="register()" class="text-1xl p-button-text"
+                                    label="Create New User">
+                                </button>
                             </div>
                             <div class="field col-12 sm:col-6">
                                 <button pButton pRipple class="w-full my-3 px-3" label="login" type="submit"
@@ -58,42 +61,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="w-full flex flex-column gap-3 px-3 pb-6">
-                        <span class="p-input-icon-left">
-                            <i class="bi bi-envelope-check-fill"></i>
-                            <input type="text" class="w-full" pInputText placeholder="email" formControlName="email" />
-                        </span>
-                        <div *ngIf="loginForm && loginFormControls['email'].errors && submited"
-                            class="invalid-feedback">
-                            <div *ngIf="loginFormControls['email'].errors['required']&& submited" style="color:red">
-                                email Is Required
-                            </div>
-                        </div>
-                        <div *ngIf="loginForm && loginFormControls['email'].errors&& loginFormControls['email'].touched"
-                            class="invalid-feedback">
-                            <small *ngIf="loginFormControls['email'].errors['email']" style="color: red;">
-                                Invaild Email Pattern
-                            </small>
-                        </div>
-                        <span class="p-input-icon-left">
-                            <i class="bi bi-key"></i>
-                            <input type="password" class="w-full" pInputText placeholder="password"
-                                formControlName="password" />
-                        </span>
-                        <div *ngIf="loginForm && loginFormControls['password'].errors&& submited"
-                            class="invalid-feedback">
-                            <div *ngIf="loginFormControls['password'].errors['required']&& submited" style="color:red">
-                                paswword Is Required
-                            </div>
-                        </div>
-                        <span class="p-input-icon-right">
-                            <button type="button" pButton routerLink="/user-managment/forgot-password/"
-                                class="text-1xl p-button-text" label="didYouForgetPassword"></button>
-                        </span>
-                        <button pButton pRipple class="w-full my-3 px-3" label="login" type="submit"
-                            class="p-button p-button-primary"></button>
-                    </div> -->
                 </div>
             </form>
         </div>

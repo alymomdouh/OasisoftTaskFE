@@ -71,4 +71,7 @@ export class LoginComponent {
         }
       });
   }
+  register() {
+    this._router.navigate(["/auth/register"]);
+  }
 }
