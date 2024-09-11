@@ -1,0 +1,101 @@
+<div class="h-screen flex flex-column bg-cover"
+    style="background: url('assets/images/login-bg.jpg');height: 100vh!important;background-size: cover !important;">
+    <div class=" shadow-2 bg-indigo-500 z-5 p-3 flex justify-content-between flex-row align-items-center">
+    </div>
+    <div class="align-self-center mt-auto mb-auto">
+        <div class="text-center z-5 flex flex-column border-1 border-round-md surface-border surface-card px-3"
+            style="margin: auto;">
+            <div class="-mt-5 text-white bg-cyan-700 border-round-md mx-auto px-3 py-1 border-1 surface-border">
+                <h2 class="m-0">Login</h2>
+            </div>
+            <div class="text-color-secondary mb-6 px-6">
+            </div>
+            <form class="align-self-center" [formGroup]="loginForm" #form="ngForm" (submit)="submit()">
+                <div class="text-center z-5 flex flex-column px-3">
+                    <div class="col-12 md:col-12">
+                        <div class="formgrid grid col">
+                            <div class="field col-12 sm:col-6">
+
+                                <span class="p-input-icon-left">
+                                    <i class="bi bi-envelope-check-fill"></i>
+                                    <input type="text" formControlName="email"
+                                        class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
+                                        [ngClass]="{ 'is-invalid': submited && loginFormControls['email'].errors }" />
+                                </span>
+                                <div *ngIf="submited && loginFormControls['email'].errors" class="invalid-feedback">
+                                    <div *ngIf="loginFormControls['email'].errors['required']">
+                                        email Is Required
+                                    </div>
+                                </div>
+                                <div *ngIf="loginForm && loginFormControls['email'].errors&& loginFormControls['email'].touched"
+                                    class="invalid-feedback">
+                                    <small *ngIf="loginFormControls['email'].errors['email']" style="color: red;">
+                                        Invaild Email Pattern
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="field col-12 sm:col-6">
+                                <span class="p-input-icon-left">
+                                    <i class="bi bi-key"></i>
+                                    <input type="password" formControlName="password"
+                                        class="p-inputtext p-component p-element ng-pristine ng-valid ng-touched"
+                                        [ngClass]="{ 'is-invalid': submited && loginFormControls['password'].errors }" />
+                                </span>
+                                <div *ngIf="submited && loginFormControls['password'].errors" class="invalid-feedback">
+                                    <div *ngIf="loginFormControls['password'].errors['required']">
+                                        paswword Is Required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-12 sm:col-6">
+                                <button type="button" pButton routerLink="/auth/forgot-password/"
+                                    class="text-1xl p-button-text" label="did You Forget Password">
+                                </button>
+                            </div>
+                            <div class="field col-12 sm:col-6">
+                                <button pButton pRipple class="w-full my-3 px-3" label="login" type="submit"
+                                    class="p-button p-button-primary"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="w-full flex flex-column gap-3 px-3 pb-6">
+                        <span class="p-input-icon-left">
+                            <i class="bi bi-envelope-check-fill"></i>
+                            <input type="text" class="w-full" pInputText placeholder="email" formControlName="email" />
+                        </span>
+                        <div *ngIf="loginForm && loginFormControls['email'].errors && submited"
+                            class="invalid-feedback">
+                            <div *ngIf="loginFormControls['email'].errors['required']&& submited" style="color:red">
+                                email Is Required
+                            </div>
+                        </div>
+                        <div *ngIf="loginForm && loginFormControls['email'].errors&& loginFormControls['email'].touched"
+                            class="invalid-feedback">
+                            <small *ngIf="loginFormControls['email'].errors['email']" style="color: red;">
+                                Invaild Email Pattern
+                            </small>
+                        </div>
+                        <span class="p-input-icon-left">
+                            <i class="bi bi-key"></i>
+                            <input type="password" class="w-full" pInputText placeholder="password"
+                                formControlName="password" />
+                        </span>
+                        <div *ngIf="loginForm && loginFormControls['password'].errors&& submited"
+                            class="invalid-feedback">
+                            <div *ngIf="loginFormControls['password'].errors['required']&& submited" style="color:red">
+                                paswword Is Required
+                            </div>
+                        </div>
+                        <span class="p-input-icon-right">
+                            <button type="button" pButton routerLink="/user-managment/forgot-password/"
+                                class="text-1xl p-button-text" label="didYouForgetPassword"></button>
+                        </span>
+                        <button pButton pRipple class="w-full my-3 px-3" label="login" type="submit"
+                            class="p-button p-button-primary"></button>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
